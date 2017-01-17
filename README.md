@@ -3,7 +3,7 @@
 Easy way to validate complex objects.
 
 ###Sample usage
-
+```java
     validate(myObject).withDefaultName()
                       .given(MyClass::getInnerIterableObject)
                       .validateInternals(v -> v.given(MyIterableElement::getVariable)
@@ -14,5 +14,11 @@ Easy way to validate complex objects.
                       .given(MyClass::getInnerSimpleObject)
                       .expectThat(isNotNull())
                       .ifErrorsPresent()
-                      .getValidationResults();
+                      .throwValidationException();
+```
+
+####Credits
+Uses [Benji Weber's method reference name resolving tools][].
+
+[Benji Weber's method reference name resolving tools]: https://github.com/benjiman/benjiql/tree/master/src/main/java/uk/co/benjiweber/benjiql/mocking
 
