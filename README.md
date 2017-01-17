@@ -12,7 +12,9 @@ Easy way to validate complex objects.
                                                .expectThat(isInRangeExclusive(2, 7))
                       .and()
                       .given(MyClass::getInnerSimpleObject)
-                      .expectThat(isNotNull())
+                      .expectThat(isNotNull(),
+                                  isNotEmpty(),
+                                  isNotWhitespace())
                       .ifErrorsPresent()
                       .throwValidationException();
 ```
