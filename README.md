@@ -3,7 +3,7 @@
 Easy way to validate complex objects.
 
 ###Sample usage
-```java
+```
     validate(myObject).withDefaultName()
                       .given(MyClass::getInnerIterableObject)
                       .validateInternals(v -> v.given(MyIterableElement::getVariable)
