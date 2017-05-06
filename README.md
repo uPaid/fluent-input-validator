@@ -7,7 +7,7 @@ Outputs a validation map with all collected errors.
 ## Table of contents
 
 * [Sample usage](#sample-usage)
- * [Output in JSON format](#output-in-json-format)
+  * [Output in JSON format](#output-in-json-format)
 * [Credits](#credits)
 
 ## Sample usage
