@@ -1,12 +1,18 @@
-#Fluent Input Validator
+# Fluent Input Validator
 
 Easy way to validate complex objects.
 
-Outputs a validation map with all collected errors. 
+Outputs a validation map with all collected errors.
 
-###Sample usage
+## Table of contents
 
-```
+* [Sample usage](#sample-usage)
+ * [Output in JSON format](#output-in-json-format)
+* [Credits](#credits)
+
+## Sample usage
+
+```java
 validate(myObject).withDefaultName()
                   .given(MyObject::getInnerComplexObject)
                   .validateInternals(v -> v.given(MyInnerComplexObject::getVariable)
@@ -22,9 +28,9 @@ validate(myObject).withDefaultName()
                   .throwValidationException();
 ```
 
-####Sample output in JSON format
+### Output in JSON format
 
-```
+```json
 {
     "MyObject.innerComplexObject.variable": [
         "may not be null"
@@ -36,9 +42,8 @@ validate(myObject).withDefaultName()
 }
 ```
 
-####Credits
+## Credits
 
 Uses [Benji Weber's method reference name resolving tools][].
 
 [Benji Weber's method reference name resolving tools]: https://github.com/benjiman/benjiql/tree/master/src/main/java/uk/co/benjiweber/benjiql/mocking
-
