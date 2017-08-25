@@ -8,6 +8,7 @@ import java.util.Objects;
 
 import static java.lang.Boolean.FALSE;
 import static java.util.Arrays.asList;
+import static java.util.function.Function.identity;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static validator.FluentInputValidator.validate;
@@ -20,6 +21,15 @@ public class FluentInputValidatorTest {
         validate(null).as("null")
                       .ifErrorsPresent()
                       .throwValidationException();
+    }
+
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void shouldThrowAnExceptionFromCustomValidator() {
+        validate(new Object()).withDefaultName()
+                              .given(identity(), "")
+                              .validateUsing(f -> {throw new IndexOutOfBoundsException();})
+                              .ifErrorsPresent()
+                              .throwValidationException();
     }
 
     @Test

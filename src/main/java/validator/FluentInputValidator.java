@@ -294,6 +294,14 @@ public final class FluentInputValidator<BaseObject> {
         }
 
         /**
+         * Allows custom validation at does not append errors, but possibly ends validation flow with an exception instead.
+         */
+        public ThisType validateUsing(Consumer<Field> consumer) {
+            consumer.accept(field);
+            return getGenericThis();
+        }
+
+        /**
          * Allows validation with {@link SpecializedValidator}.
          */
         public ThisType validateUsing(Supplier<SpecializedValidator<Field>> specializedValidatorSupplier) {
