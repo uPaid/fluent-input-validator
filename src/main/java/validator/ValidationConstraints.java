@@ -8,14 +8,13 @@ import java.util.Objects;
 import static java.lang.Enum.valueOf;
 import static java.util.Objects.*;
 import static org.apache.commons.lang3.StringUtils.isEmpty;
-import static org.apache.commons.lang3.StringUtils.isWhitespace;
 
 /**
  * Collection of static methods that can be used in {@link FluentInputValidator}.
  * They are meant to be imported statically.
  *
  * @author Paweł Fiuk
- *         TODO: provide resource file with validation messages
+ * TODO: provide resource file with validation messages
  */
 
 public class ValidationConstraints {
@@ -82,8 +81,50 @@ public class ValidationConstraints {
      */
     public static ValidationConstraint isNotWhitespace() {
         return object -> {
-            if (isWhitespace(asString(object))) {
+            if (StringUtils.isWhitespace(asString(object))) {
                 return "may not be whitespace";
+            }
+            return null;
+        };
+    }
+
+    /**
+     * Checks if validated collection or {@link String} representation of object is not whitespace.
+     *
+     * @see StringUtils#isWhitespace(CharSequence)
+     */
+    public static ValidationConstraint isWhitespace() {
+        return object -> {
+            if (!StringUtils.isWhitespace(asString(object))) {
+                return "may only be whitespace";
+            }
+            return null;
+        };
+    }
+
+    /**
+     * Checks if validated collection or {@link String} representation of object is not blank.
+     *
+     * @see StringUtils#isNotBlank(CharSequence)
+     */
+    public static ValidationConstraint isNotBlank() {
+        return object -> {
+            if (StringUtils.isBlank(asString(object))) {
+                return "may not be blank";
+            }
+            return null;
+        };
+    }
+
+    /**
+     * Checks if validated collection or {@link String} representation of object is blank.
+     *
+     * @see StringUtils#isBlank(CharSequence)
+     */
+    public static ValidationConstraint isBlank() {
+        return object -> {
+            if (!StringUtils.isBlank(asString(object))) {
+                return "may only be blank";
             }
             return null;
         };
