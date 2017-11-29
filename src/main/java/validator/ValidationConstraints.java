@@ -4,6 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.util.Collection;
 import java.util.Objects;
+import java.util.function.Predicate;
 
 import static java.lang.Enum.valueOf;
 import static java.util.Objects.*;
@@ -299,6 +300,19 @@ public class ValidationConstraints {
                 return "invalid field value";
             }
             return null;
+        };
+    }
+
+    /**
+     * Checks if testing the field against predicate returns true.
+     */
+    public static ValidationConstraint fulfills(Predicate<? super Object> predicate) {
+        return object -> {
+            try {
+                return predicate.test(object) ? null : "does not fulfill predicate";
+            } catch (Exception ex) {
+                return "exception thrown while testing against predicate";
+            }
         };
     }
 

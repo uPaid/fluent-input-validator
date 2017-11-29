@@ -9,8 +9,7 @@ import java.util.Objects;
 import static java.lang.Boolean.FALSE;
 import static java.util.Arrays.asList;
 import static java.util.function.Function.identity;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import static validator.FluentInputValidator.validate;
 import static validator.ValidationConstraints.*;
 
@@ -118,6 +117,23 @@ public class FluentInputValidatorTest {
                                          .getValidationResults();
 
         assertTrue(validation.containsKey("ClassUnderTestComplex.innerObject.variable"));
+    }
+
+    @Test
+    public void shouldCheckWithPredicate() {
+        ValidationMap validation;
+        validation = validate(new ClassUnderTestSimple(1))
+                .withDefaultName()
+                .given(ClassUnderTestSimple::getVariable)
+                .expectThat(fulfills(Integer.valueOf(2)::equals))
+                .expectThat(fulfills(i -> {throw new RuntimeException();}))
+                .ifErrorsPresent()
+                .getValidationResults();
+
+        assertTrue(validation.containsKey("ClassUnderTestSimple.variable"));
+        assertEquals(2,
+                     validation.get("ClassUnderTestSimple.variable")
+                               .size());
     }
 
     private class ClassUnderTestSimpleValidator implements SpecializedValidator<ClassUnderTestSimple> {
