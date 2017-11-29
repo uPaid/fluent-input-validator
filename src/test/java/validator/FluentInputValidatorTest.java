@@ -144,6 +144,20 @@ public class FluentInputValidatorTest {
                 .expectThat(fulfills(FluentInputValidatorTest::testPredicate));
     }
 
+    @Test
+    public void shouldAcceptEachErrorPresent() {
+        final long[] fieldsWithErrors = {0};
+        validate(new ClassUnderTestSimple(null))
+                .withDefaultName()
+                .given(ClassUnderTestSimple::getVariable)
+                .expectThat(isNotNull(),
+                            isNotWhitespace())
+                .ifErrorsPresent()
+                .forEach(error -> ++fieldsWithErrors[0]);
+
+        assertEquals(1, fieldsWithErrors[0]);
+    }
+
     private static boolean testPredicate(Integer i) {
         return true;
     }

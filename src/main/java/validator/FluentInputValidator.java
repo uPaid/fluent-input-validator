@@ -1,5 +1,6 @@
 package validator;
 
+import org.apache.commons.lang3.tuple.Pair;
 import validator.ValidationConstraints.ValidationConstraint;
 import validator.utils.Recorder;
 import validator.utils.RecordingObject;
@@ -363,6 +364,11 @@ public final class FluentInputValidator<BaseObject> {
          */
         public final ValidationMap getValidationResults() {
             return new ValidationMap(validationResults);
+        }
+
+        public final ValidationFinalizer forEach(Consumer<Pair<String, List<String>>> validationConsumer) {
+            validationResults.forEach((field, errors) -> validationConsumer.accept(Pair.of(field, errors)));
+            return this;
         }
 
         /**
