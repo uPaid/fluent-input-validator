@@ -136,6 +136,18 @@ public class FluentInputValidatorTest {
                                .size());
     }
 
+    @Test
+    public void shouldAcceptMethodReferenceAsPredicate() {
+        validate(new ClassUnderTestSimple(1))
+                .withDefaultName()
+                .given(ClassUnderTestSimple::getVariable)
+                .expectThat(fulfills(FluentInputValidatorTest::testPredicate));
+    }
+
+    private static boolean testPredicate(Integer i) {
+        return true;
+    }
+
     private class ClassUnderTestSimpleValidator implements SpecializedValidator<ClassUnderTestSimple> {
         @Override
         public ValidationMap getValidationFor(ClassUnderTestSimple input, String inputName) {

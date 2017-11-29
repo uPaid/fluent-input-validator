@@ -306,10 +306,10 @@ public class ValidationConstraints {
     /**
      * Checks if testing the field against predicate returns true.
      */
-    public static ValidationConstraint fulfills(Predicate<? super Object> predicate) {
+    public static <T> ValidationConstraint fulfills(Predicate<T> predicate) {
         return object -> {
             try {
-                return predicate.test(object) ? null : "does not fulfill predicate";
+                return predicate.test((T)object) ? null : "does not fulfill predicate";
             } catch (Exception ex) {
                 return "exception thrown while testing against predicate";
             }
